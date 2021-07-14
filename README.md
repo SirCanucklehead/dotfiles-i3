@@ -6,4 +6,4 @@ Install;
 
 `cd dotfiles-i3`
 
-`./install`
+`./install.sh`
