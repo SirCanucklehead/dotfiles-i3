@@ -1,6 +1,6 @@
 # dotfiles-i3
 
-Requires i3-gaps, i3blocks, i3status.
+Requires [i3-gaps](https://github.com/Airblader/i3), [i3blocks](https://vivien.github.io/i3blocks/), [i3blocks-contrib](https://github.com/vivien/i3blocks-contrib), [i3status](https://github.com/i3/i3status).
 
 ## Install 
 
