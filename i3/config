@@ -29,7 +29,7 @@ gaps outer 10
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
-exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
+exec --no-startup-id xss-lock --transfer-sleep-lock clear-- i3lock --nofork
 
 # NetworkManager is the most popular way to manage wireless networks on Linux,
 # and nm-applet is a desktop environment-independent system tray GUI for it.
@@ -52,7 +52,8 @@ bindsym $mod+Return exec tilix
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+d exec --no-startup-id dmenu_run
+bindsym $mod+d exec --no-startup-id rofi -show run
+#bindsym exec --no-startup-id dmenu_run
 # A more modern dmenu replacement is rofi:
 # bindcode $mod+40 exec "rofi -modi drun,run -show drun"
 # There also is i3-dmenu-desktop which only displays applications shipping a
@@ -151,7 +152,21 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+#bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# Create Log out, Reboot, Poweroff bindings
+mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff" {
+        bindsym r exec --no-startup-id systemctl reboot
+        bindsym s exec --no-startup-id systemctl suspend; mode "default"
+        bindsym l exit
+        bindsym p exec --no-startup-id systemctl poweroff
+
+        # back to normal: Enter or Escape
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+
+bindsym $mod+Shift+e mode "(S)uspend, (L)ogout, (R)eboot, (P)oweroff"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
@@ -189,25 +204,24 @@ colors {
     separator #800020
     background #0b0506
     statusline #839496
-    focused_workspace #000000 #800020 #fdf6e3
-    active_workspace #4d0012 #1a0006 #fdf6e3
+    focused_workspace #000000 #cc0099 #fdf6e3
+    active_workspace #4d0012 #cc0099 #cc0099
     inactive_workspace #4d0012 #000000 #ffffff
     urgent_workspace #d33682 #d33682 #fdf6e3
   }
 }
 
 # User Binds
-bindsym $mod+Prior exec xrandr --output eDP-1 --brightness 1
-bindsym $mod+Next exec xrandr --output eDP-1 --brightness 0.8
 
-bindsym $mod+Escape exec /usr/bin/htop
+#bindsym $mod+Prior exec xrandr --output eDP-1 --brightness 1
+#bindsym $mod+Next exec xrandr --output eDP-1 --brightness 0.8
 
-bindsym $mod+b exec vivaldi-stable
+#bindsym $mod+Escape exec /usr/bin/htop
 
-bindsym $mod+p exec pcmanfm
+bindsym $mod+b exec firefox
+
+bindsym $mod+p exec thunar
 
 # Startup
 exec --no-startup-id nitrogen --restore
-#exec xrandr --output eDP-1 --brightness 0.8
-exec --no-startup-id xinput set-prop "AlpsPS/2 ALPS DualPoint TouchPad" "Device Enabled" 0
-exec --no-startup-id xinput set-prop "AlpsPS/2 ALPS DualPoint Stick" "Device Enabled" 0
+exec --no-startup-id xscreensaver --no-splash
